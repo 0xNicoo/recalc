@@ -11,6 +11,24 @@ describe('Subtract', () => {
 })
 
 
+
+describe('Pow', () => {
+    test('Deberia 5 ^ 2 = 25', () => {
+        
+        const a=5;
+        
+        const result = core.pow (a);
+        expect(result).toBe(25); 
+    })
+
+    test('No Deberia 2 ^ 2 = 10', () => {
+        
+        const a=2;
+
+        const result = core.pow (a);
+        expect(result).not.toBe(10); 
+    })
+})
 describe('Multiply',()=>{
     test('Deberia 3 * 3 = 9', ()=>{
         const a = 3;
@@ -28,7 +46,7 @@ describe('Multiply',()=>{
 
         expect(result).not.toBe(12);
     })
-
+})
 
 describe('Add', () => {
     test('Deberia 2 + 2 = 4', () => {
