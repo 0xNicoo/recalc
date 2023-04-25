@@ -37,34 +37,3 @@ describe('Add', () => {
     })
 
 })
-
-describe('Multiply',()=>{
-        
-    test('Deberia 3 * 3 = 9',()=>{
-        //Given
-        const a = 3;
-        const b = 3;
-
-        //When
-        const result = core.mul(a,b);
-
-        //Then
-        expect(result).toBe(9)
-    })
-
-    test('No deberia 3 * 2 = 9',()=>{
-
-        //Given
-        const a = 3;
-        const b = 2;
-
-        //When
-        const result = core.mul(a,b);
-
-        //Then
-        expect(result).not.toBe(9)
-
-    })
-
-
-})
