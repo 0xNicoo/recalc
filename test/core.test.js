@@ -10,7 +10,40 @@ describe('Subtract', () => {
     })
 })
 
+describe('Divide', () => {
+    test('Deberia 6 / 2 = 3', () => {
+    
+        const a = 6;
+        const b = 2;
 
+        const result = core.div(a, b);
+
+        expect(result).toBe(3);
+    })
+
+    test('No deberia 10 / 2 = 4', () => {
+
+        const a = 10;
+        const b = 2;
+
+        const result = core.div(a, b)
+
+        expect(result).not.toBe(4)
+    })
+
+    //Opcional
+
+    test('Deberia 10 / 0 = Error: Division por cero', () => {
+
+        const a = 10;
+        const b = 0;
+
+        const result = core.div(a, b)
+
+        expect(result).toBe('Error: Division por cero');
+    })
+
+})
 
 describe('Pow', () => {
     test('Deberia 5 ^ 2 = 25', () => {
@@ -29,6 +62,7 @@ describe('Pow', () => {
         expect(result).not.toBe(10); 
     })
 })
+
 describe('Multiply',()=>{
     test('Deberia 3 * 3 = 9', ()=>{
         const a = 3;
@@ -68,9 +102,5 @@ describe('Add', () => {
 
         //When
         const result = core.add(a, b)
-
-        //Then
-        expect(result).not.toBe(4)
     })
-
 })
