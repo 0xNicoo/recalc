@@ -1,4 +1,5 @@
 import core from '../src/core.js'
+import loop from '../src/cli.js'
 
 describe('Subtract', () => {
     test('Deberia 2 - 2 = 0', () => {
@@ -74,3 +75,26 @@ describe('Add', () => {
     })
 
 })
+
+
+
+describe('cli loop func test', () => {
+    
+    test('Deberia retornar 👋👋👋 si se ingresa exit', async () =>{
+        //Given
+        const mockLogFunction = jest.fn()
+        const mockReadLine = {
+            question: jest.fn(),
+            close: jest.fn()
+        }
+        mockReadLine.question.mockReturnValueOnce('exit')
+
+        //When
+        const result = await loop(mockReadLine, mockLogFunction)
+
+        //Then
+        expect(mockLogFunction).toHaveBeenCalledWith("👋👋👋")
+    })
+
+})
+
