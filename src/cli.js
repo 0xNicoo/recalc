@@ -6,11 +6,11 @@ const readlineFunction = createInterface({
     output: process.stdout,
 });
 
-const allFnsNames = Object.keys(core);
+const ALL_FNS_NAMES = Object.keys(core);
 
-const AVAILABLE_FNS= [...allFnsNames, 'exit'].join(', ')
+const AVAILABLE_FNS= [...ALL_FNS_NAMES, 'exit'].join(', ')
 
-async function loop(readline, logFunction = console.log) {
+async function loop(readline, allFnsNames, logFunction = console.log) {
     const fnName = await readline.question(`Ingrese función (${AVAILABLE_FNS}): `)
 
     if (fnName === "exit") {
@@ -20,7 +20,7 @@ async function loop(readline, logFunction = console.log) {
 
     if(!allFnsNames.includes(fnName)){
         logFunction("Funcion invalida, intente nuevamente");
-        loop(readline);
+        return loop(readline, allFnsNames);
     }
 
     const fn = core[fnName];
@@ -31,10 +31,10 @@ async function loop(readline, logFunction = console.log) {
     const result = fnName === "pow"? fn(Number(firstNum)) : fn(Number(firstNum), Number(secondNum));
 
     logFunction(result);
-    loop(readline);
+    return loop(readline, allFnsNames);
 }
 
-loop(readlineFunction);
+loop(readlineFunction, ALL_FNS_NAMES);
 
 
 export default loop

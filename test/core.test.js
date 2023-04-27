@@ -90,11 +90,25 @@ describe('cli loop func test', () => {
         mockReadLine.question.mockReturnValueOnce('exit')
 
         //When
-        const result = await loop(mockReadLine, mockLogFunction)
+        const result = await loop(mockReadLine, Object.keys(core), mockLogFunction)
 
         //Then
         expect(mockLogFunction).toHaveBeenCalledWith("👋👋👋")
     })
+    
+    test('Deberia retornar "Funcion invalida, intente nuevamente" si se ingresa una funcion no valida', async () => {
+        //Given
+        const mockLogFunction = jest.fn()
+        const mockReadLine = {
+            question: jest.fn().mockReturnValueOnce("funcionInvalida").mockReturnValueOnce("exit"),
+            close: jest.fn()
+        }
 
+        //When
+        await loop(mockReadLine, Object.keys(core), mockLogFunction);
+      
+        //Then
+        expect(mockLogFunction).toHaveBeenCalledWith("Funcion invalida, intente nuevamente");
+    })
 })
 
