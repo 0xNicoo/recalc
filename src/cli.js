@@ -1,26 +1,26 @@
 import { createInterface } from "node:readline/promises";
 import core from "./core.js"
 
-const readline = createInterface({
+const readlineFunction = createInterface({
     input: process.stdin,
     output: process.stdout,
 });
 
-const allFnsNames = Object.keys(core);
+const ALL_FNS_NAMES = Object.keys(core);
 
-const AVAILABLE_FNS= [...allFnsNames, 'exit'].join(', ')
+const AVAILABLE_FNS= [...ALL_FNS_NAMES, 'exit'].join(', ')
 
-async function loop() {
+async function loop(readline, allFnsNames, logFunction = console.log) {
     const fnName = await readline.question(`Ingrese función (${AVAILABLE_FNS}): `)
 
     if (fnName === "exit") {
-        console.log("👋👋👋");
+        logFunction("👋👋👋");
         return readline.close();
     }
 
     if(!allFnsNames.includes(fnName)){
-        console.log("Funcion invalida, intente nuevamente");
-        loop();
+        logFunction("Funcion invalida, intente nuevamente");
+        return loop(readline, allFnsNames);
     }
 
     const fn = core[fnName];
@@ -30,8 +30,11 @@ async function loop() {
 
     const result = fnName === "pow"? fn(Number(firstNum)) : fn(Number(firstNum), Number(secondNum));
 
-    console.log(result);
-    loop();
+    logFunction(result);
+    return loop(readline, allFnsNames);
 }
 
-loop();
+loop(readlineFunction, ALL_FNS_NAMES);
+
+
+export default loop
