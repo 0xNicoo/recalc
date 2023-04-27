@@ -62,6 +62,14 @@ describe('Pow', () => {
         const result = core.pow (a);
         expect(result).not.toBe(10); 
     })
+
+    test('Deberia -4 ^ 2 = 16', () => {
+        
+        const a=-4;
+        
+        const result = core.pow (a);
+        expect(result).toBe(16); 
+    })
 })
 
 describe('Multiply',()=>{
