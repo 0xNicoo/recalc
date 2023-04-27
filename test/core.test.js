@@ -142,3 +142,14 @@ describe('cli loop func test', () => {
     })
 })
 
+
+test('Deberia 1 - 2 = -1', () => {
+    
+    const a=1;
+    const b=2;
+    
+    const result = core.sub(a, b);
+    expect(result).toBe(-1);
+
+
+})
