@@ -150,3 +150,19 @@ describe('cli loop func test', () => {
     })
 })
 
+
+describe('test: 2do parametro mayor que el primero',()=>{
+    test('Deberia 1 - 2 = -1', () => {
+    
+        const a=1;
+        const b=2;
+        
+        const result = core.sub(a, b);
+        expect(result).toBe(-1);
+    
+    
+    })    
+})
+
+
+
