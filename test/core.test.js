@@ -1,5 +1,5 @@
 import core from '../src/core.js'
-import loop from '../src/cli.js'
+import cli from '../src/cli.js'
 
 describe('Subtract', () => {
     test('Deberia 2 - 2 = 0', () => {
@@ -128,7 +128,7 @@ describe('cli loop func test', () => {
         mockReadLine.question.mockReturnValueOnce('exit')
 
         //When
-        const result = await loop(mockReadLine, Object.keys(core), mockLogFunction)
+        const result = await cli.loop(mockReadLine, Object.keys(core), mockLogFunction)
 
         //Then
         expect(mockLogFunction).toHaveBeenCalledWith("👋👋👋")
@@ -143,7 +143,7 @@ describe('cli loop func test', () => {
         }
 
         //When
-        await loop(mockReadLine, Object.keys(core), mockLogFunction);
+        await cli.loop(mockReadLine, Object.keys(core), mockLogFunction);
       
         //Then
         expect(mockLogFunction).toHaveBeenCalledWith("Funcion invalida, intente nuevamente");
@@ -162,6 +162,19 @@ describe('test: 2do parametro mayor que el primero',()=>{
     
     
     })    
+})
+
+
+describe('cli throw func test',()=>{
+    test('Deberia retornar un error en caso de no ser un numero ',()=>{
+        
+        function isNum(){
+            cli.isNumber("a");
+        }
+
+        expect(isNum).toThrow(new Error("El valor ingresado no es un numero"));
+
+    })
 })
 
 
