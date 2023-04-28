@@ -12,6 +12,8 @@ const AVAILABLE_FNS= [...ALL_FNS_NAMES, 'exit'].join(', ')
 
 async function loop(readline, allFnsNames, logFunction = console.log) {
     const fnName = await readline.question(`Ingrese función (${AVAILABLE_FNS}): `)
+    let firstNum;
+    let secondNum;
 
     if (fnName === "exit") {
         logFunction("👋👋👋");
@@ -25,8 +27,19 @@ async function loop(readline, allFnsNames, logFunction = console.log) {
 
     const fn = core[fnName];
 
-    const firstNum = await readline.question("Ingrese el primer número: ")
-    const secondNum = fnName ==="pow" ? null : await readline.question("Ingrese el segundo número: ")
+    try{
+        firstNum = await readline.question("Ingrese el primer número: ")             
+        if(isNaN(firstNum)){
+            throw("El valor ingresado no es un numero")
+        }
+        secondNum = fnName ==="pow" ? null : await readline.question("Ingrese el segundo número: ")
+        if(isNaN(firstNum)){
+            throw("El valor ingresado no es un numero")
+        }
+    }catch(error){
+        logFunction(error)
+        return loop(readline,allFnsNames);
+    }
 
     const result = fnName === "pow"? fn(Number(firstNum)) : fn(Number(firstNum), Number(secondNum));
 
