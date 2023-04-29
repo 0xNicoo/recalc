@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/cli.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "dev": "nodemon src/api.js",
     "start": "node src/api.js"
   },
@@ -34,3 +34,4 @@
     ]
   }
 }
+
