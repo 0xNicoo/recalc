@@ -89,6 +89,15 @@ describe('Multiply',()=>{
 
         expect(result).not.toBe(12);
     })
+
+    test('Deberia -4 * 3 = -12', ()=>{
+        const a = -4;
+        const b = 3;
+    
+        const result = core.mul(a,b);
+    
+        expect(result).toBe(-12);
+    })
 })
 
 describe('Add', () => {
