@@ -44,7 +44,7 @@ describe("createHistory",()=>{
         }) 
 
         // VERIFICAMOS SI TIENE EL SUGUNDO PARAMETRO PARA GUARDAR EN EL RETURN 
-        expect(cHistory.get().hasOwnProperty("secondArg")).toBe(true) 
+        expect(cHistory.get().hasOwnProperty("secondArg")).toEqual(true) 
     
     }) 
     
