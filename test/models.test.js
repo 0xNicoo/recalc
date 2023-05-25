@@ -1,6 +1,7 @@
 const { seed } = require('../src/seed.js')
 const {
     createHistoryEntry,
+    deleteHistory,
     History,
     Operation
 } = require('../src/models.js')
@@ -26,5 +27,15 @@ describe("History", () => {
         expect(histories[0].firstArg).toEqual(2)
         expect(histories[0].result).toEqual(0)
         expect(histories[0].Operation.name).toEqual("SUB")
+    })
+})
+
+describe("Borrar toda la tabla History", () => {
+    test("Deberia borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
+        await deleteHistory({})
+
+        const histories = await History.findAll({})
+
+        expect(histories.length).toEqual(0)
     })
 })
