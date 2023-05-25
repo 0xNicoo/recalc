@@ -38,4 +38,20 @@ describe("Borrar toda la tabla History", () => {
 
         expect(histories.length).toEqual(0)
     })
+
+    test("Deberia luego de guardar un registro en History, borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
+
+        await createHistoryEntry({
+            firstArg: 2,
+            secondArg: 2,
+            result: 0,
+            operationName: "SUB"
+        })
+        
+        await deleteHistory({})
+
+        const histories = await History.findAll({})
+
+        expect(histories.length).toEqual(0)
+    })
 })
