@@ -28,6 +28,8 @@ describe("History", () => {
         expect(histories[0].Operation.name).toEqual("SUB")
     })
 })
+
+
 describe("createHistory",()=>{ 
 
     test("El segundo argumento deberia exitir al crear un history",async()=>{ 
@@ -45,7 +47,7 @@ describe("createHistory",()=>{
             operationName:"SUB" 
         
         }) 
-        
+
         // VERIFICAMOS SI TIENE EL SUGUNDO PARAMETRO PARA GUARDAR EN EL RETURN 
         expect(cHistory.get().hasOwnProperty("secondArg")).toBe(true) 
     
