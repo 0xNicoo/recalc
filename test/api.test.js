@@ -1,6 +1,7 @@
 const request = require('supertest');
 const api = require('../src/api.js');
 const { seed } = require('../src/seed.js')
+const { createHistoryEntry, History } = require('../src/models.js')
 
 beforeEach(async () => {
     await seed()
@@ -94,3 +95,26 @@ describe("API add", () => {
     })
 })
 
+describe("API historial", () => {
+    test('Debería responder con un 200 ok si la entrada del historial existe', async () => {
+        const app = await api.build();
+        const entradaHistorial = await createHistoryEntry({
+            firstArg: 10,
+            secondArg: 2,
+            result: 5,
+            operationName: 'DIV',
+            error: null
+        });
+
+        const response = await request(app).get(`/api/v1/historial/${entradaHistorial.id}`);
+        expect(response.status).toBe(200);
+    });
+
+    test('Deberia devolver un error si la entrada del historial no existe', async () => {
+        const app = await api.build();
+        const response = await request(app).get('/api/v1/historial/-1');
+
+        expect(response.status).toBe(404);
+        expect(response.body.error).toBe('Entrada del historial no encontrada')
+    })
+})
