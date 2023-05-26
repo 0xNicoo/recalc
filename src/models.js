@@ -42,6 +42,7 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
 
     return History.create({
         firstArg,
+        secondArg,
         result,
         OperationId: operation.id
     })
@@ -52,7 +53,6 @@ export async function deleteHistory({}){
         truncate: true
     })
 }
-
 
 export function createTables() {
     return Promise.all([

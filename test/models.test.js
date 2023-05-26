@@ -30,12 +30,24 @@ describe("History", () => {
     })
 })
 
+describe("createHistoryEntry", () => {
+    test("Deberia poder crear una resta en el history", async () => {
+        const cHistory = await createHistoryEntry({
+            firstArg: 4,
+            secondArg: 2,
+            result: 2,
+            operationName: "SUB"
+        })
+
+        expect(cHistory.get().secondArg).not.toBeUndefined()
+    })
+})
+
+
 describe("Borrar toda la tabla History", () => {
     test("Deberia borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
         await deleteHistory({})
-
         const histories = await History.findAll({})
-
         expect(histories.length).toEqual(0)
     })
 
