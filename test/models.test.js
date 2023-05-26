@@ -2,7 +2,8 @@ const { seed } = require('../src/seed.js')
 const {
     createHistoryEntry,
     History,
-    Operation
+    Operation,
+    allHistory
 } = require('../src/models.js')
 
 beforeEach(async () => {
@@ -27,4 +28,23 @@ describe("History", () => {
         expect(histories[0].result).toEqual(0)
         expect(histories[0].Operation.name).toEqual("SUB")
     })
+})
+
+describe("Deberia obtener todo el historial",()=>{
+    test("Deberia traer todos los datos del la tabla history al llamar la funcion allHistory",async()=>{
+        
+        await createHistoryEntry({
+            firstArg: 2,
+            secondArg: 2,
+            result: 0,
+            operationName: "SUB"
+        })
+        
+    
+
+        const history = await allHistory({})
+
+        expect(history.length).toBe(1)
+    })
+    
 })
