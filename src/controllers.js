@@ -15,7 +15,7 @@ router.get("/sub/:a/:b", async function (req, res) {
     } else {
         const result = core.sub(a, b);
 
-        await createHistoryEntry({ firstArg: a, operationName: "SUB" })
+        await createHistoryEntry({ firstArg: a,secondArg:b, operationName: "SUB" })
         return res.send({ result });
     }
 });
@@ -54,9 +54,10 @@ router.get("/pow/:a", async function (req, res) {
     const a = Number(params.a);
 
     if (isNaN(a)) {
-        res.status(400).send('El parámetro no es un número');
+        return res.status(400).send('El parámetro no es un número');
     } else {
         const result = core.pow(a);
+        await createHistoryEntry({firstArg:a,secondArg:null,operationName:'POW',error:null})
         return res.send({ result });
     }
 });
