@@ -17,3 +17,32 @@ describe("API substract", () => {
         expect(res.body.result).toEqual(1)
     })
 })
+
+describe("API pow",()=>{
+    test("Deberia responder con un error:400", async()=>{
+        const app = await api.build();
+
+        const res = await request(app).get('/api/v1/pow/y')
+            .expect(400)
+            
+
+        expect(isNaN(res.body.result)).toEqual(true)
+        expect(res.error.text).toBe("El parámetro no es un número")
+        expect(res.status).toBe(400)
+    
+    })
+    test("Deberia responder con un error:400", async()=>{
+
+        const app = await api.build();
+
+        const res = await request(app).get('/api/v1/pow/XC')
+            .expect(400)
+            
+
+        expect(isNaN(res.body.result)).toEqual(true)
+        expect(res.error.text).toBe("El parámetro no es un número")
+        expect(res.status).toBe(400)
+    
+    })
+    
+})
