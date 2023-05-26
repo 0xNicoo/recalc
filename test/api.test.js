@@ -13,11 +13,7 @@ describe("API substract", () => {
         const res = await request(app).get('/api/v1/sub/2/1')
             .expect(200)
             .expect('Content-Type', "application/json; charset=utf-8")
-            /*.then((err, res) => {
-                if (err) throw err
 
-                expect(res.body.result).toEqual(1);
-            })*/
         expect(res.body.result).toEqual(1)
     })
 })
