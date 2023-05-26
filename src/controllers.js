@@ -28,7 +28,9 @@ router.get("/multi/:a/:b",async function(req,res){
         res.status(400).send("Uno de los parametros no es un numero")
     }else{
         const result = core.mul(a,b);
-        return res.send({result})
+        await createHistoryEntry({ firstArg: a,secondArg: b, operationName: "MUL" ,result:result})
+        return res.send({ result });
+    
     }
 })
 
