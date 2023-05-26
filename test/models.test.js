@@ -1,6 +1,7 @@
 const { seed } = require('../src/seed.js')
 const {
     createHistoryEntry,
+    deleteHistory,
     History,
     Operation,
     allHistory
@@ -33,6 +34,17 @@ describe("History", () => {
 describe("Deberia obtener todo el historial",()=>{
     test("Deberia traer todos los datos del la tabla history al llamar la funcion allHistory",async()=>{
         
+describe("Borrar toda la tabla History", () => {
+    test("Deberia borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
+        await deleteHistory({})
+
+        const histories = await History.findAll({})
+
+        expect(histories.length).toEqual(0)
+    })
+
+    test("Deberia luego de guardar un registro en History, borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
+
         await createHistoryEntry({
             firstArg: 2,
             secondArg: 2,
@@ -47,4 +59,11 @@ describe("Deberia obtener todo el historial",()=>{
         expect(history.length).toBe(1)
     })
     
+})
+        await deleteHistory({})
+
+        const histories = await History.findAll({})
+
+        expect(histories.length).toEqual(0)
+    })
 })

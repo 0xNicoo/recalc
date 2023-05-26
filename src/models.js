@@ -47,9 +47,17 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
     })
 }
 
+
 export async function allHistory({}){
     return await History.findAll({})
 }
+
+export async function deleteHistory({}){
+    await History.destroy({
+        truncate: true
+    })
+}
+
 
 export function createTables() {
     return Promise.all([
