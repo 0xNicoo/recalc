@@ -34,6 +34,15 @@ describe("History", () => {
 describe("Deberia obtener todo el historial",()=>{
     test("Deberia traer todos los datos del la tabla history al llamar la funcion allHistory",async()=>{
         
+
+        await deleteHistory({})
+
+        const histories = await History.findAll({})
+
+        expect(histories.length).toEqual(0)
+    })
+})
+
 describe("Borrar toda la tabla History", () => {
     test("Deberia borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
         await deleteHistory({})
@@ -59,11 +68,4 @@ describe("Borrar toda la tabla History", () => {
         expect(history.length).toBe(1)
     })
     
-})
-        await deleteHistory({})
-
-        const histories = await History.findAll({})
-
-        expect(histories.length).toEqual(0)
-    })
 })
