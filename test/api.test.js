@@ -116,3 +116,20 @@ describe ("API multi",()=>{
     
 })
 
+
+describe ("API get all histories",()=>{
+
+    test("Deberia responder con un 200 y deberia devolver 3 entidades.", async () => {
+        const app = await api.build()
+        
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/4`)
+        await request(app).get(`/api/v1/sub/1/2`)
+
+        const res = await request(app).get(`/api/v1/histories`)
+        console.log()
+        
+        expect(res.status).toBe(200)
+        expect(res.body.allHistories.length).toBe(3)
+    })
+})
