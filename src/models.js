@@ -54,7 +54,6 @@ export async function deleteHistory({}){
     })
 }
 
-
 export function createTables() {
     return Promise.all([
         History.sync({ force: true }),
