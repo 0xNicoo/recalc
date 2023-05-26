@@ -67,3 +67,20 @@ describe("Borrar toda la tabla History", () => {
         expect(histories.length).toEqual(0)
     })
 })
+
+describe("Guardar el atributo 'error' en el historial", () => {
+    test('El atributo "error" se guarda correctamente en la base de datos', async () => {
+        const mensajeError = 'Mensaje de error';
+
+        const nuevoHistorial = await History.create({
+            firstArg: 1,
+            secondArg: 2,
+            result: 4,
+            operationName: "ADD",
+            error: mensajeError
+        })
+
+        const historialGuardado = await History.findByPk(nuevoHistorial.id);
+        expect(historialGuardado.error).toBe(mensajeError);
+    })
+})
