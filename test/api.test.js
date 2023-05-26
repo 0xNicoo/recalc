@@ -51,7 +51,7 @@ describe("API pow",()=>{
 
 describe("API sum decimal",()=>{
 
-    test("Deberia responder 0.3 al sumar 0.1+0.2",async()=>{
+    test("Debería responder 0.3 al sumar 0.1+0.2",async()=>{
         const app = await api.build()
 
         const res = await request(app).get('/api/v1/add/0.1/0.2')
