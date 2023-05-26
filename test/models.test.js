@@ -47,9 +47,7 @@ describe("createHistoryEntry", () => {
 describe("Borrar toda la tabla History", () => {
     test("Deberia borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
         await deleteHistory({})
-
         const histories = await History.findAll({})
-
         expect(histories.length).toEqual(0)
     })
 
