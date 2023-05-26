@@ -31,5 +31,17 @@ describe("API pow",()=>{
         expect(res.status).toBe(400)
     
     })
+    test("Deberia responder con un error:400", async()=>{
+        const app = await api.build();
+
+        const res = await request(app).get('/api/v1/pow/XC')
+            .expect(400)
+            
+
+        expect(isNaN(res.body.result)).toEqual(true)
+        expect(res.body.result).toEqual(undefined)
+        expect(res.status).toBe(400)
+    
+    })
     
 })
