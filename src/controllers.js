@@ -79,4 +79,16 @@ router.get("/div/:a/:b", async function (req, res) {
     }
 });
 
+router.get("/bin/:a", async function (req, res) {
+    const params = req.params;
+    const a = Number(params.a);
+
+    if (isNaN(a)) {
+        return res.status(400).send('El parámetro no es un número');
+    } else {
+        const result = core.bin(a);
+        return res.send({ result });
+    }
+});
+
 export default router;
