@@ -7,6 +7,17 @@ beforeEach(async () => {
 })
 
 
+describe("API div", () => {
+    test("Deberia responder con un 400 y si su segundo parametro es 0 devuelva mensaje de error", async () => {
+        const app = await api.build();
+        const mensajeError="Error: Division por cero";
+
+        const res = await request(app).get("/api/v1/div/1/0")
+        expect(res.error.text).toBe(mensajeError);
+        expect(res.status).toBe(400);
+    })
+})
+
 describe("API pow",()=>{
     test("Deberia responder con un error:400", async()=>{
         const app = await api.build();
@@ -36,6 +47,7 @@ describe("API pow",()=>{
     
 })
 
+
 describe("API add", () => {
     test("Deberia responder con un 200 ok y su respuesta ser menor al primer parametro", async () => {
         const app = await api.build()
@@ -63,3 +75,4 @@ describe("API add", () => {
         expect(res.status).toBe(200)
     })
 })
+
