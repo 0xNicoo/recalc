@@ -54,7 +54,7 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
 }
 
 
-export async function allHistory({}){
+export async function allHistory(){
     return await History.findAll({})
 }
 

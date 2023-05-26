@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { createHistoryEntry } from './models.js'
+import { createHistoryEntry, allHistory } from './models.js'
 
 const router = express.Router();
 
@@ -19,6 +19,7 @@ router.get("/sub/:a/:b", async function (req, res) {
         return res.send({ result });
     }
 });
+
 router.get("/multi/:a/:b",async function(req,res){
     const params =  req.params;
     const a = Number(params.a);
@@ -79,6 +80,11 @@ router.get("/div/:a/:b", async function (req, res) {
         await createHistoryEntry({ firstArg: a, secondArg: b, operationName: "DIV", error: null})
         return res.send({ result });
     }
+});
+
+router.get("/histories", async function (req, res) {
+    const allHistories = await allHistory()
+    return res.send({allHistories}) 
 });
 
 export default router;
