@@ -77,10 +77,10 @@ export async function deleteHistory(filter, page = 1, size = 10){
     
     const histories = await allHistory(filter, page, size)
 
-    histories.forEach(history => {
-        history.destroy({
+    histories.forEach(async history => {
+        await history.destroy({
             where: {}
-        })
+        });
     })
 }
 

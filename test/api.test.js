@@ -195,7 +195,7 @@ describe ("API get all histories",()=>{
     })
 })
 
-describe("Deberia borrar las rows de la tabal",()=>{
+describe("API delete/all",()=>{
     test("Deberia responder un 200 y eliminar todas las filas",async ()=>{
         const app = await api.build()
         
