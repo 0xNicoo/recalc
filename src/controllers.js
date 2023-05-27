@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { createHistoryEntry } from './models.js'
+import { createHistoryEntry, findByID } from './models.js'
 
 const router = express.Router();
 
@@ -28,7 +28,9 @@ router.get("/multi/:a/:b",async function(req,res){
         res.status(400).send("Uno de los parametros no es un numero")
     }else{
         const result = core.mul(a,b);
-        return res.send({result})
+        await createHistoryEntry({ firstArg: a,secondArg: b, operationName: "MUL" ,result:result})
+        return res.send({ result });
+    
     }
 })
 
@@ -90,5 +92,16 @@ router.get("/bin/:a", async function (req, res) {
         return res.send({ result });
     }
 });
+
+router.get('/historial/:id', async (req, res) => {
+    const historyId = req.params.id;
+    const historia = await findByID(historyId);
+
+    if (historia) {
+        res.status(200).json({ data: historia });
+    } else {
+        res.status(404).json({ error: 'Entrada del historial no encontrada'});
+    }
+})
 
 export default router;
