@@ -116,3 +116,30 @@ describe ("API multi",()=>{
     
 })
 
+describe("API sqrt",()=>{
+    test("Deberia responder con un 200 ",async()=>{
+        const app = await api.build();
+
+        const a = 64;
+
+        const res = await request(app).get(`/api/v1/sqrt/${a}`)
+
+        expect(res.status).toBe(200)
+        expect(isNaN(res.body.a)).toBe(true)
+        expect(res.body.result).toBe(8)
+
+    })
+
+    test("Deberia responder con un 200 ",async()=>{
+        const app = await api.build();
+
+        const a = 36;
+
+        const res = await request(app).get(`/api/v1/sqrt/${a}`)
+
+        expect(res.status).toBe(200)
+        expect(isNaN(res.body.a)).toBe(true)
+        expect(res.body.result).toBe(6)
+
+    })
+})
