@@ -21,11 +21,15 @@ function divide(a, b) {
 function pow(a) {
     return Math.pow(a,2)
 }
+function sqrt(a){
+    return Math.sqrt(a)
+}
 
 export default {
     add: add,
     sub: subtract,
     mul: multiply,
     div: divide,
-    pow: pow
+    pow: pow,
+    sqrt: sqrt
 }
