@@ -22,10 +22,15 @@ function pow(a) {
     return Math.pow(a,2)
 }
 
+function decimalToBinary(a) {
+    return a.toString(2);
+}
+
 export default {
     add: add,
     sub: subtract,
     mul: multiply,
     div: divide,
-    pow: pow
+    pow: pow,
+    bin: decimalToBinary
 }
