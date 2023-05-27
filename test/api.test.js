@@ -114,3 +114,25 @@ describe("API historial", () => {
         expect(response.body.error).toBe('Entrada del historial no encontrada')
     })
 })
+
+describe ("API multi",()=>{
+
+    function isFloat(num){
+        return num % 1 !== 0
+    }
+
+    test("Deberia responder con un 200 ok", async () => {
+        const app = await api.build()
+        const a = 5.5
+        const b = 2.4
+
+
+        const res = await request(app).get(`/api/v1/multi/${a}/${b}`)
+        expect(res.status).toBe(200)
+        
+        expect(isFloat(res.body.result)).toBe(true)
+    })
+
+    
+})
+
