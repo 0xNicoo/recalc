@@ -69,15 +69,17 @@ router.get("/div/:a/:b", async function (req, res) {
     const params = req.params;
     const a = Number(params.a);
     const b = Number(params.b);
+    const mensajeError = "Error: Division por cero";
 
     if (isNaN(a) || isNaN(b)) {
         return res.status(400).send('Uno de los parámetros no es un número');
     } else {
         if (b == 0) {
-            return res.status(400).send('Error: Division por cero');
+            await createHistoryEntry({ firstArg: a, secondArg: b, operationName: "DIV", error: mensajeError, result: null})
+            return res.status(400).send(mensajeError);
         }
         const result = core.div(a, b);
-        await createHistoryEntry({ firstArg: a, secondArg: b, operationName: "DIV", error: null})
+        await createHistoryEntry({ firstArg: a, secondArg: b, operationName: "DIV", error: null, result: result})
         return res.send({ result });
     }
 });
