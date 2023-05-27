@@ -56,13 +56,28 @@ router.get("/pow/:a", async function (req, res) {
     const a = Number(params.a);
 
     if (isNaN(a)) {
+
         return res.status(400).send('El parámetro no es un número');
     } else {
         const result = core.pow(a);
-        await createHistoryEntry({firstArg:a,secondArg:null,operationName:'POW',error:null})
+        await createHistoryEntry({firstArg:a,secondArg:null,operationName:'POW',result:result})
         return res.send({ result });
     }
 });
+
+router.get("/sqrt/:a", async function(req,res){
+    const params = req.params;
+    const a = Number(params.a)
+
+    if(isNaN(a)){
+        return res.status(400).send("El parametro no es un numero")
+       
+    }else{
+        const result = core.sqrt(a);
+        await createHistoryEntry({firstArg:a,secondArg:null,operationName:'SQRT',result:result})
+        return res.send({result})
+    }
+})
 
 router.get("/div/:a/:b", async function (req, res) {
     const params = req.params;
