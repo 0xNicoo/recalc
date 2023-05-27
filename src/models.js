@@ -70,3 +70,7 @@ export function createTables() {
         Operation.sync({ force: true })
     ]);
 }
+
+export function findByID(id) {
+    return History.findByPk(id);
+}

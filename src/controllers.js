@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { History, createHistoryEntry } from './models.js'
+import { createHistoryEntry, findByID } from './models.js'
 
 const router = express.Router();
 
@@ -81,7 +81,7 @@ router.get("/div/:a/:b", async function (req, res) {
 
 router.get('/historial/:id', async (req, res) => {
     const historyId = req.params.id;
-    const historia = await History.findByPk(historyId);
+    const historia = await findByID(historyId);
 
     if (historia) {
         res.status(200).json({ data: historia });
