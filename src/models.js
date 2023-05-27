@@ -54,11 +54,26 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
 }
 
 
-export async function allHistory({}){
-    return await History.findAll({})
+export async function allHistory(filter, page = 1, size = 10){
+
+    const includeOptions = [{
+        model: Operation
+    }];
+
+    if (filter !== undefined) {
+        includeOptions[0].where = { name: filter };
+    }
+
+    const histories = await History.findAll({
+        include: includeOptions,
+        limit: size,
+        offset: (page - 1) * size
+    });
+    
+    return histories; 
 }
 
-export async function deleteHistory({}){
+export async function deleteHistory(){
     await History.destroy({
         truncate: true
     })
@@ -69,4 +84,8 @@ export function createTables() {
         History.sync({ force: true }),
         Operation.sync({ force: true })
     ]);
+}
+
+export function findByID(id) {
+    return History.findByPk(id);
 }

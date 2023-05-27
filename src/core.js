@@ -25,11 +25,16 @@ function sqrt(a){
     return Math.sqrt(a)
 }
 
+function decimalToBinary(a) {
+    return a.toString(2);
+}
+
 export default {
     add: add,
     sub: subtract,
     mul: multiply,
     div: divide,
     pow: pow,
-    sqrt: sqrt
+    sqrt: sqrt,
+    bin: decimalToBinary
 }
