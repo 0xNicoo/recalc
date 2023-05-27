@@ -123,6 +123,28 @@ describe('Add', () => {
     })
 })
 
+describe('decimalToBinary', () => {
+    test('Deberia convertir 10 a 1010', () => {
+        const a = 10;
+
+        const result = core.bin(a);
+        expect(result).toBe('1010');
+    })
+
+    test('Deberia convertir 42 a 101010', () => {
+        const a = 42;
+
+        const result = core.bin(a);
+        expect(result).toBe('101010');
+    })
+
+    test('N debería convertir 20 a 11011', () => {
+        const a = 20;
+
+        const result = core.bin(a);
+        expect(result).not.toBe('11011');
+    })
+})
 
 
 describe('cli loop func test', () => {

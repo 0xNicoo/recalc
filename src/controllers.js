@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { createHistoryEntry, allHistory } from './models.js'
+import { createHistoryEntry, findByID, allHistory } from './models.js'
 
 const router = express.Router();
 
@@ -81,6 +81,29 @@ router.get("/div/:a/:b", async function (req, res) {
         return res.send({ result });
     }
 });
+
+router.get("/bin/:a", async function (req, res) {
+    const params = req.params;
+    const a = Number(params.a);
+
+    if (isNaN(a)) {
+        return res.status(400).send('El parámetro no es un número');
+    } else {
+        const result = core.bin(a);
+        return res.send({ result });
+    }
+});
+
+router.get('/historial/:id', async (req, res) => {
+    const historyId = req.params.id;
+    const historia = await findByID(historyId);
+
+    if (historia) {
+        res.status(200).json({ data: historia });
+    } else {
+        res.status(404).json({ error: 'Entrada del historial no encontrada'});
+    }
+})
 
 router.get("/histories", async function (req, res) {
     const allHistories = await allHistory(req.query.operation, req.query.page, req.query.size)
