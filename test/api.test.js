@@ -194,3 +194,19 @@ describe ("API get all histories",()=>{
         expect(res.body.allHistories.length).toBe(1)
     })
 })
+
+describe("Deberia borrar las rows de la tabal",()=>{
+    test("Deberia responder un 200 y eliminar todas las filas",async ()=>{
+        const app = await api.build()
+        
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/3`)  
+        await request(app).get(`/api/v1/sub/1/4`)
+
+        const res = await request(app).get(`/api/v1/delete/all`)
+
+        expect(res.status).toBe(200)
+        expect(res.body.message).toBe("Se borraron todas las historias de la tabla")
+        
+    })
+})

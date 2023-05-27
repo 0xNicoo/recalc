@@ -86,6 +86,13 @@ export function createTables() {
     ]);
 }
 
+export async function deleteRows(){
+    await History.destroy({
+        where: {},
+        truncate:true
+    })
+}
+
 export function findByID(id) {
     return History.findByPk(id);
 }

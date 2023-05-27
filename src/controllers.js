@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { createHistoryEntry, findByID, allHistory } from './models.js'
+import { createHistoryEntry, findByID, allHistory,deleteRows } from './models.js'
 
 const router = express.Router();
 
@@ -109,5 +109,10 @@ router.get("/histories", async function (req, res) {
     const allHistories = await allHistory(req.query.operation, req.query.page, req.query.size)
     return res.send({allHistories}) 
 });
+
+router.get("/delete/all", async function(req,res){
+    await deleteRows()
+    return res.status(200).json({message: "Se borraron todas las historias de la tabla"})
+})
 
 export default router;
