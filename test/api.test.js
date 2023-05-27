@@ -136,3 +136,61 @@ describe ("API multi",()=>{
     
 })
 
+
+describe ("API get all histories",()=>{
+
+    test("Deberia responder con un 200 y deberia devolver 3 entidades.", async () => {
+        const app = await api.build()
+
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/4`)
+        await request(app).get(`/api/v1/sub/1/2`)
+
+        const res = await request(app).get(`/api/v1/histories`)
+        
+        expect(res.status).toBe(200)
+        expect(res.body.allHistories.length).toBe(3)
+    })
+
+    test("Deberia responder con un 200 y deberia devolver 2 entidades pasandole el filtro de ADD.", async () => {
+        const app = await api.build()
+        
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/4`)
+        await request(app).get(`/api/v1/sub/1/2`)
+
+        const res = await request(app).get(`/api/v1/histories?operation=ADD`)
+        
+        expect(res.status).toBe(200)
+        expect(res.body.allHistories.length).toBe(2)
+    })
+
+    test("Deberia responder con un 200 y deberia devolver 2 entidades pasandole como parametro page 2 y size 2", async () => {
+        const app = await api.build()
+        
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/4`)
+        await request(app).get(`/api/v1/sub/1/2`)
+        await request(app).get(`/api/v1/sub/1/2`)
+
+        const res = await request(app).get(`/api/v1/histories?page=2&size=2`)
+        
+        expect(res.status).toBe(200)
+        expect(res.body.allHistories.length).toBe(2)
+    })
+
+    test("Deberia responder con un 200 y deberia devolver 1 entidades pasandole como parametro operation ADD, page 2 y size 2", async () => {
+        const app = await api.build()
+        
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/4`)  
+        await request(app).get(`/api/v1/sub/1/2`)
+        await request(app).get(`/api/v1/div/1/2`)
+        await request(app).get(`/api/v1/add/1/4`)
+
+        const res = await request(app).get(`/api/v1/histories?operation=ADD&page=2&size=2`)
+        
+        expect(res.status).toBe(200)
+        expect(res.body.allHistories.length).toBe(1)
+    })
+})
