@@ -21,6 +21,9 @@ function divide(a, b) {
 function pow(a) {
     return Math.pow(a,2)
 }
+function sqrt(a){
+    return Math.sqrt(a)
+}
 
 function decimalToBinary(a) {
     return a.toString(2);
@@ -32,5 +35,6 @@ export default {
     mul: multiply,
     div: divide,
     pow: pow,
+    sqrt: sqrt,
     bin: decimalToBinary
 }
