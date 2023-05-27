@@ -83,7 +83,7 @@ router.get("/div/:a/:b", async function (req, res) {
 });
 
 router.get("/histories", async function (req, res) {
-    const allHistories = await allHistory()
+    const allHistories = await allHistory(req.query.operation, req.query.page, req.query.size)
     return res.send({allHistories}) 
 });
 
