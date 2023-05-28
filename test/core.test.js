@@ -39,9 +39,9 @@ describe('Divide', () => {
         const a = 10;
         const b = 0;
 
-        const result = core.div(a, b)
+        const result = () => {return core.div(a, b)}
 
-        expect(result).toBe('Error: Division por cero');
+        expect(result).toThrow(new Error("Division por cero."));
     })
 
 })
