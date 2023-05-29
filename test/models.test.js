@@ -35,6 +35,28 @@ describe("History", () => {
 describe("Deberia obtener todo el historial",()=>{
     test("Deberia traer todos los datos del la tabla history al llamar la funcion allHistory",async()=>{
         
+        await createHistoryEntry({
+            firstArg: 2,
+            secondArg: 2,
+            result: 0,
+            operationName: "SUB"
+        })
+
+        await createHistoryEntry({
+            firstArg: 2,
+            secondArg: 2,
+            result: 4,
+            operationName: "ADD"
+        })
+        
+        const history = await allHistory()
+
+        expect(history.length).toBe(2)
+
+    })
+
+    test("No deberia traer ningun dato al llamar la funcion allHistory",async()=>{
+        
         
         const history = await allHistory()
 

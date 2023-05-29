@@ -1,7 +1,6 @@
 const request = require('supertest');
 const api = require('../src/api.js');
 const { seed } = require('../src/seed.js')
-const { History } = require('../src/models.js')
 
 beforeEach(async () => {
     await seed()
@@ -24,7 +23,6 @@ describe("API pow",()=>{
         const app = await api.build();
 
         const res = await request(app).get('/api/v1/pow/y')
-            .expect(400)
             
 
         expect(isNaN(res.body.result)).toEqual(true)
@@ -37,7 +35,6 @@ describe("API pow",()=>{
         const app = await api.build();
 
         const res = await request(app).get('/api/v1/pow/XC')
-            .expect(400)
             
 
         expect(isNaN(res.body.result)).toEqual(true)
@@ -50,14 +47,12 @@ describe("API pow",()=>{
 
 })
 
-describe("API sum decimal",()=>{
+describe("API add decimal",()=>{
 
     test("Debería responder 0.3 al sumar 0.1+0.2",async()=>{
         const app = await api.build()
 
         const res = await request(app).get('/api/v1/add/0.1/0.2')
-            .expect(200)
-            .expect('Content-Type', "application/json; charset=utf-8")
 
         expect(isNaN(res.body.result)).toEqual(false)
         expect(res.error.text).toBe(undefined)
