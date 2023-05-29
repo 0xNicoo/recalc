@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { createHistoryEntry, findByID, allHistory,deleteRows, deleteHistory } from './models.js'
+import { createHistoryEntry, findByID, allHistory, deleteHistory } from './models.js'
 
 const router = express.Router();
 
