@@ -94,7 +94,7 @@ router.get("/bin/:a", async function (req, res) {
     }
 });
 
-router.get('/historial/:id', async (req, res) => {
+router.get('/history/:id', async (req, res) => {
     const historyId = req.params.id;
     const historia = await findByID(historyId);
 
