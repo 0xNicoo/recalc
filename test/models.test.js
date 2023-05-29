@@ -59,7 +59,7 @@ describe("createHistoryEntry", () => {
 
 describe("Borrar toda la tabla History", () => {
     test("Deberia borrar todos los registros de la tabla History al llamar a la funcion deleteHistory", async () => {
-        await deleteHistory({})
+        await deleteHistory()
         const histories = await History.findAll({})
         expect(histories.length).toEqual(0)
     })
@@ -73,7 +73,7 @@ describe("Borrar toda la tabla History", () => {
             operationName: "SUB"
         })
         
-        await deleteHistory({})
+        await deleteHistory()
         const histories = await History.findAll({})
 
         expect(histories.length).toBe(0)

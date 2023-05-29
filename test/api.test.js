@@ -95,12 +95,12 @@ describe("API add", () => {
     })
 })
 
-describe("API historial", () => {
+describe("API history", () => {
     test('Debería responder con un 200 ok y verificar si la entrada del historial si existe', async () => {
         const app = await api.build();
         //Agrego una entrada al historial para asegurarme que siempre haya al menos una con id 1
         await request(app).get('/api/v1/add/2/2');
-        const response = await request(app).get(`/api/v1/historial/1`);
+        const response = await request(app).get(`/api/v1/history/1`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body.data.id).toBe(1);
@@ -108,7 +108,7 @@ describe("API historial", () => {
 
     test('Deberia devolver un error si la entrada del historial no existe', async () => {
         const app = await api.build();
-        const response = await request(app).get('/api/v1/historial/-1');
+        const response = await request(app).get('/api/v1/history/-1');
 
         expect(response.statusCode).toBe(404);
         expect(response.body.error).toBe('Entrada del historial no encontrada')
@@ -219,5 +219,21 @@ describe ("API get all histories",()=>{
         
         expect(res.status).toBe(200)
         expect(res.body.allHistories.length).toBe(1)
+    })
+})
+
+describe("API delete/all",()=>{
+    test("Deberia responder un 200 y eliminar todas las filas",async ()=>{
+        const app = await api.build()
+        
+        await request(app).get(`/api/v1/add/1/2`)
+        await request(app).get(`/api/v1/add/1/3`)  
+        await request(app).get(`/api/v1/sub/1/4`)
+
+        const res = await request(app).get(`/api/v1/delete/all`)
+
+        expect(res.status).toBe(200)
+        expect(res.body.message).toBe("Se borraron todas las historias de la tabla")
+        
     })
 })
