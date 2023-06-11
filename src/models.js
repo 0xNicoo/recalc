@@ -1,11 +1,19 @@
 import { Sequelize, DataTypes } from 'sequelize';
 
-const inTest = process.env.NODE_ENV === 'test';
+var storageDB;
+
+if(process.env.NODE_ENV === 'test'){
+    storageDB = ":memory:"
+}else{
+    storageDB = './db.sqlite3'
+}
+
+const inTest = process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'test:e2e';
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     logging: !inTest,
-    storage: inTest ? ':memory:' : './db.sqlite3'
+    storage: storageDB
 })
 
 export const History = sequelize.define('History', {
