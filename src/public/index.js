@@ -62,7 +62,7 @@ async function calculateAdd(firstArg, secondArg){
 
 async function calculateDiv(firstArg, secondArg) {
     const error = "Error: División por cero";
-    if (secondArg != 0) {
+    if (secondArg !== 0) {
         const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
         const { result } = await resp.json();
         return result;
