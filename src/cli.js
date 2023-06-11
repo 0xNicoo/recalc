@@ -11,8 +11,10 @@ const ALL_FNS_NAMES = Object.keys(core);
 const AVAILABLE_FNS= [...ALL_FNS_NAMES, 'exit'].join(', ')
 
 function isNumber(num){
-    if(isNaN(num))
+    if(isNaN(num)){
         throw new Error("El valor ingresado no es un numero")
+    }
+        
     return num;
 }
 
