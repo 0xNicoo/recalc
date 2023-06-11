@@ -7,7 +7,7 @@ let currentDisplay = "";
 let operation = null;
 let reset = false;
 
-let unused;
+
 
 $buttons.addEventListener('click', async (e) => {
     const nextAction = e.target.name
@@ -87,9 +87,8 @@ async function calculateDiv(firstArg, secondArg) {
         const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
         const { result } = await resp.json();
         return result;
-    } else {
-        return error;
     }
+    return error;
 }
 
 function renderDisplay(chars) {
@@ -97,4 +96,4 @@ function renderDisplay(chars) {
     $display.value = chars;
 }
 
-function rerender() { }
+
