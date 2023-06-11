@@ -1,4 +1,4 @@
-# ReCalc v1.3.2
+# ReCalc v1.3.3
 
 Calculadora con funciones simples.
 
@@ -15,8 +15,14 @@ npm run seed
 # iniciar calculadora
 npm run start
 
-# correr lost test
+# correr los test
 npm run test
+
+# correr test end-to-end
+npm run test:e2e
+
+# correr test estatico
+npm run lint
 ```
 ## Integrantes
 
