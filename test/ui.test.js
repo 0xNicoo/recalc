@@ -40,6 +40,8 @@ test.describe('test', () => {
       }
     });
 
+  
+
     const historyEntry = await History.findOne({
       where: { OperationId: operation.id }
     })
@@ -47,6 +49,40 @@ test.describe('test', () => {
     expect(historyEntry.firstArg).toEqual(79)
     expect(historyEntry.secondArg).toEqual(9)
     expect(historyEntry.result).toEqual(70)
+  });
+
+  test('Deberia poder realizar una multiplicacion', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '5' }).click()
+    await page.getByRole('button', { name: '*' }).click()
+    await page.getByRole('button', { name: '5' }).click()
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/multi/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+
+    const { result } = await response.json();
+    expect(result).toBe(25);
+
+    await expect(page.getByTestId('display')).toHaveValue(/25/)
+
+    const operation = await Operation.findOne({
+      where: {
+        name: "MUL"
+      }
+    });
+
+  
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+
+    expect(historyEntry.firstArg).toEqual(5)
+    expect(historyEntry.secondArg).toEqual(5)
+    expect(historyEntry.result).toEqual(25)
   });
 
   test('Deberia poder realizar una suma', async ({ page }) => {
@@ -113,5 +149,4 @@ test('Deberia poder realizar la operacion potencia',async({ page})=>{
     expect(historyEntry.firstArg).toEqual(5)
     expect(historyEntry.result).toEqual(25)
   });
-
 })
