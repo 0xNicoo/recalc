@@ -10,15 +10,14 @@ router.get("/sub/:a/:b", async function (req, res) {
     const a = Number(params.a);
     const b = Number(params.b);
 
-    if (isNaN(a) || isNaN(b)) {
+    if(isNaN(a) || isNaN(b)) {
         await createHistoryEntry({firstArg: isNaN(a) ? null : a, secondArg: isNaN(b) ? null : b, operationName: "SUB", error: "Uno de los parámetros no es un número"})
         return res.status(400).json({error: 'Uno de los parámetros no es un número'});
-    } else {
-        const result = core.sub(a, b);
+    } 
 
-        await createHistoryEntry({ firstArg: a,secondArg:b, result: result, operationName: "SUB" })
-        return res.send({ result });
-    }
+    const result = core.sub(a, b);
+    await createHistoryEntry({ firstArg: a,secondArg:b, result: result, operationName: "SUB" })
+    return res.send({ result });
 });
 
 router.get("/multi/:a/:b",async function(req,res){
@@ -29,12 +28,11 @@ router.get("/multi/:a/:b",async function(req,res){
     if(isNaN(a) || isNaN(b)){
         await createHistoryEntry({firstArg: isNaN(a) ? null : a, secondArg: isNaN(b) ? null : b, operationName: "MUL", error: "Uno de los parámetros no es un número"})
         return res.status(400).json({error: "Uno de los parametros no es un numero"})
-    }else{
-        const result = core.mul(a,b);
-        await createHistoryEntry({ firstArg: a,secondArg: b, operationName: "MUL" ,result:result})
-        return res.send({ result });
-    
     }
+
+    const result = core.mul(a,b);
+    await createHistoryEntry({ firstArg: a,secondArg: b, operationName: "MUL" ,result:result})
+    return res.send({ result });
 })
 
 router.get("/add/:a/:b", async function (req, res) {
@@ -42,44 +40,44 @@ router.get("/add/:a/:b", async function (req, res) {
     const a = Number(params.a);
     const b = Number(params.b);
 
-    if (isNaN(a) || isNaN(b)) {
+    if(isNaN(a) || isNaN(b)){
         await createHistoryEntry({firstArg: isNaN(a) ? null : a, secondArg: isNaN(b) ? null : b, operationName: "ADD", error: "Uno de los parámetros no es un número"})
         return res.status(400).json({error: 'Uno de los parámetros no es un número'});
        
-    } else {
-        const result = core.add(a, b);
-
-        await createHistoryEntry({firstArg: a, secondArg: b, operationName: "ADD" , result: result})
-        return res.send({ result });
     }
+
+    const result = core.add(a, b);
+    await createHistoryEntry({firstArg: a, secondArg: b, operationName: "ADD" , result: result})
+    return res.send({ result });
 });
 
 router.get("/pow/:a", async function (req, res) {
     const params = req.params;
     const a = Number(params.a);
 
-    if (isNaN(a)) {
+    if(isNaN(a)){
         await createHistoryEntry({operationName: "POW", error: "El parámetro no es un número"})
         return res.status(400).json({error: 'El parámetro no es un número'});
-    } else {
-        const result = core.pow(a);
-        await createHistoryEntry({firstArg:a,secondArg:null,operationName:'POW',result:result})
-        return res.send({ result });
     }
+    
+    const result = core.pow(a);
+    await createHistoryEntry({firstArg:a,secondArg:null,operationName:'POW',result:result})
+    return res.send({ result });
 });
 
 router.get("/sqrt/:a", async function(req,res){
     const params = req.params;
     const a = Number(params.a)
+
     if(isNaN(a)){
         await createHistoryEntry({operationName: "SQRT", error: "El parámetro no es un número"})
         return res.status(400).json({error: "El parametro no es un numero"})
        
-    }else{
-        const result = core.sqrt(a);
-        await createHistoryEntry({firstArg:a,secondArg:null,operationName:'SQRT',result:result})
-        return res.send({result})
     }
+
+    const result = core.sqrt(a);
+    await createHistoryEntry({firstArg:a,secondArg:null,operationName:'SQRT',result:result})
+    return res.send({result})
 })
 
 router.get("/div/:a/:b", async function (req, res) {
@@ -106,13 +104,13 @@ router.get("/bin/:a", async function (req, res) {
     const params = req.params;
     const a = Number(params.a);
 
-    if (isNaN(a)) {
+    if(isNaN(a)){
         await createHistoryEntry({operationName: "SQRT", error: "El parámetro no es un número"})
         return res.status(400).json({error: 'El parámetro no es un número'});
-    } else {
-        const result = core.bin(a);
-        return res.send({ result });
     }
+
+    const result = core.bin(a);
+    return res.send({ result });
 });
 
 router.get('/history/:id', async (req, res) => {
