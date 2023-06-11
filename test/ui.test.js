@@ -82,3 +82,36 @@ test.describe('test', () => {
     expect(historyEntry.result).toEqual(21)
   });
 })
+
+test('Deberia poder realizar una división', async ({ page }) => {
+  await page.goto('./');
+
+  await page.getByRole('button', { name: '1' }).click()
+  await page.getByRole('button', { name: '0' }).click()
+  await page.getByRole('button', { name: '/' }).click()
+  await page.getByRole('button', { name: '2' }).click()
+
+  const [response] = await Promise.all([
+    page.waitForResponse((r) => r.url().includes('/api/v1/div/')),
+    page.getByRole('button', { name: '=' }).click()
+  ]);
+
+  const { result } = await response.json();
+  expect(result).toBe(5);
+
+  await expect(page.getByTestId('display')).toHaveValue(/5/)
+
+  const operation = await Operation.findOne({
+    where: {
+      name: "DIV"
+    }
+  });
+
+  const historyEntry = await History.findOne({
+    where: { OperationId: operation.id }
+  })
+
+  expect(historyEntry.firstArg).toEqual(10)
+  expect(historyEntry.secondArg).toEqual(2)
+  expect(historyEntry.result).toEqual(5)
+});
