@@ -180,6 +180,30 @@ test.describe('test', () => {
       expect(historyEntry.result).toEqual(25)
   });
 
+  test('Deberia traer la operacion 4+4=8 y 5-4=1 luego de haberlas realizada', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    await page.getByRole('button', { name: '5' }).click()
+    await page.getByRole('button', { name: '-' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    await page.getByRole('button', { name: 'Ver historial' }).click()
+
+    await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/histories')),
+      page.getByRole('button', { name: 'Ver historial' }).click()
+    ]);
+
+    await expect(page.getByTestId('histories')).toHaveValue("4 + 4 = 8\n5 - 4 = 1\n")
+    
+  });
+
 })
 
 

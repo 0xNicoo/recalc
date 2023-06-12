@@ -22,19 +22,18 @@ let reset = false;
 
 
 $hisotries.addEventListener('click', async (e) => {
+    let result;
+
     const nextAction = e.target.name
     if(nextAction == "getAllHistory"){
         result = await getAllHistory()
-        $hisotriesDisplay.value = ""
-        result.forEach(history => {
-            console.log(history.OperationId)
-            $hisotriesDisplay.value += history.firstArg + " " + operationsMap.get(history.OperationId) + " " + history.secondArg + " = " + history.result + "\n"
-        });
     }
 
     if(nextAction == "clearScreen"){
-        $hisotriesDisplay.value = ""
+        result = "";
     }
+
+    return renderHistoriesDisplay(result)
 })
 
 
@@ -132,3 +131,13 @@ function renderDisplay(chars) {
 }
 
 
+function renderHistoriesDisplay(histories){
+    $hisotriesDisplay.value = ""
+    if(histories === ""){
+        return;
+    }
+    histories.forEach(history => {
+        $hisotriesDisplay.value += history.firstArg + " " + operationsMap.get(history.OperationId) + " " + history.secondArg + " = " + history.result + "\n"
+    });
+   
+}
