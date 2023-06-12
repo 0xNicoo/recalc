@@ -25,10 +25,15 @@ $hisotries.addEventListener('click', async (e) => {
     const nextAction = e.target.name
     if(nextAction == "getAllHistory"){
         result = await getAllHistory()
+        $hisotriesDisplay.value = ""
         result.forEach(history => {
             console.log(history.OperationId)
             $hisotriesDisplay.value += history.firstArg + " " + operationsMap.get(history.OperationId) + " " + history.secondArg + " = " + history.result + "\n"
         });
+    }
+
+    if(nextAction == "clearScreen"){
+        $hisotriesDisplay.value = ""
     }
 })
 
