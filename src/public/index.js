@@ -9,9 +9,7 @@ let reset = false;
 
 document.addEventListener('keydown', async (e) => {
     const key = e.key;
-    const [firstArg, secondArg] = currentDisplay.split(operation)
     let buttonId = '';
-
     switch (key) {
         case '0':
         case '1':
@@ -37,20 +35,16 @@ document.addEventListener('keydown', async (e) => {
         case 'Backspace':
             buttonId = 'button-c';
             break;
-        //Para usar la función decimal a binario se utiliza la letra b
         case 'b':
             buttonId = 'button-bin';
             break;
-        //Para usar la función de raiz cuadrada se utiliza la letra s
         case 's':
             buttonId = 'button-sqrt';
             break;
-        //Para usar la función potencia de dos se utiliza la letra p
         case 'p':
             buttonId = 'button-^2';
             break
     }
-
     if (buttonId) {
         const button = document.getElementById(buttonId);
         if (button) {
