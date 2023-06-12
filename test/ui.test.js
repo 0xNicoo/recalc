@@ -204,6 +204,83 @@ test.describe('test', () => {
     
   });
 
+
+  test('Deberia poder borrar el display',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '7' }).click()
+    await page.getByRole('button', { name: '6' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+  
+    await page.getByRole('button', { name: 'c' }).click()
+    
+    await expect(page.getByTestId('display')).toHaveValue("")
+  
+  });
+
+  test('Deberia poder realizar la conversión de decimal a binario',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: 'bin' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/bin/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const { result } = await response.json();
+    expect(result).toBe("100");
+  
+    await expect(page.getByTestId('display')).toHaveValue(/100/)
+  
+    const operation = await Operation.findOne({
+      where: {
+        name: "BIN"
+      }
+    });
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+  
+      expect(historyEntry.firstArg).toEqual(4)
+      expect(historyEntry.result).toEqual(100)
+  });
+
+  test('Deberia poder realizar la raiz cuadrada',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '3' }).click()
+    await page.getByRole('button', { name: '6' }).click()
+    await page.getByRole('button', { name: 'sqrt' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/sqrt/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const { result } = await response.json();
+    expect(result).toBe(6);
+  
+    await expect(page.getByTestId('display')).toHaveValue(/6/)
+  
+    const operation = await Operation.findOne({
+      where: {
+        name: "SQRT"
+      }
+    });
+
+    
+  
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+  
+      expect(historyEntry.firstArg).toEqual(36)
+      expect(historyEntry.result).toEqual(6)
+  });
+
 })
 
 
