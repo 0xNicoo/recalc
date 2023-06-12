@@ -180,6 +180,18 @@ test.describe('test', () => {
       expect(historyEntry.result).toEqual(25)
   });
 
+  test('Deberia poder borrar el display',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '7' }).click()
+    await page.getByRole('button', { name: '6' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+  
+    await page.getByRole('button', { name: 'c' }).click()
+    
+    await expect(page.getByTestId('display')).toHaveValue("")
+  
+  });
 })
 
 
