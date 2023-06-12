@@ -1,12 +1,36 @@
 const $display = document.querySelector('.display')
+const $hisotriesDisplay = document.querySelector('.histories-display')
 const $buttons = document.querySelector('.buttons')
+const $hisotries = document.querySelector('.hisotries')
 
 const operations = ['-','+','^2','*', '/'];
+
+const operationsMap = new Map([    
+[1,'+'],
+[2,'-'],    
+[3,'*'],
+[4,'/'],
+[5,'**'],
+[6,'sqrt'],
+[7,'bin']
+]);
 
 let currentDisplay = "";
 let operation = null;
 let reset = false;
 
+
+
+$hisotries.addEventListener('click', async (e) => {
+    const nextAction = e.target.name
+    if(nextAction == "getAllHistory"){
+        result = await getAllHistory()
+        result.forEach(history => {
+            console.log(history.OperationId)
+            $hisotriesDisplay.value += history.firstArg + " " + operationsMap.get(history.OperationId) + " " + history.secondArg + " = " + history.result + "\n"
+        });
+    }
+})
 
 
 $buttons.addEventListener('click', async (e) => {
@@ -81,7 +105,7 @@ async function calculateAdd(firstArg, secondArg){
     return result;
 }
 
-async function calculateDiv(firstArg, secondArg) {
+async function calculateDiv(firstArg, secondArg){
     const error = "Error: División por cero";
     if (secondArg !== "0") {
         const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
@@ -89,6 +113,12 @@ async function calculateDiv(firstArg, secondArg) {
         return result;
     }
     return error;
+}
+
+async function getAllHistory(){
+    const resp = await fetch(`/api/v1/histories`)
+    const result = await resp.json();
+    return result.allHistories;
 }
 
 function renderDisplay(chars) {
