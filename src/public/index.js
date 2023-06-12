@@ -7,7 +7,46 @@ let currentDisplay = "";
 let operation = null;
 let reset = false;
 
+document.addEventListener('keydown', async (e) => {
+    const key = e.key;
+    const [firstArg, secondArg] = currentDisplay.split(operation)
+    let buttonId = '';
 
+    switch (key) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '.':
+        case '+':
+        case '-':
+        case '*':
+        case '/':
+        case '=':
+        case '^2':
+            buttonId = `button-${key}`;
+            break;
+        case 'Enter':
+            buttonId = 'button-=';
+            break;
+        case 'Backspace':
+            buttonId = 'button-c';
+            break;
+    }
+
+    if (buttonId) {
+        const button = document.getElementById(buttonId);
+        if (button) {
+          button.click();
+        }
+      }
+});
 
 $buttons.addEventListener('click', async (e) => {
     const nextAction = e.target.name
@@ -95,5 +134,4 @@ function renderDisplay(chars) {
     currentDisplay = chars;
     $display.value = chars;
 }
-
 
