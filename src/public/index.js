@@ -7,7 +7,44 @@ let currentDisplay = "";
 let operation = null;
 let reset = false;
 
-
+document.addEventListener('keydown', async (e) => {
+    const key = e.key;
+    const buttonId = getButtonIdForKey(key);
+    if (buttonId) {
+      const button = document.getElementById(buttonId);
+      if (button) {
+        button.click();
+      }
+    }
+  });
+  
+  function getButtonIdForKey(key) {
+    const keyMap = {
+      '0': 'button-0',
+      '1': 'button-1',
+      '2': 'button-2',
+      '3': 'button-3',
+      '4': 'button-4',
+      '5': 'button-5',
+      '6': 'button-6',
+      '7': 'button-7',
+      '8': 'button-8',
+      '9': 'button-9',
+      '.': 'button-.',
+      '+': 'button-+',
+      '-': 'button--',
+      '*': 'button-*',
+      '/': 'button-/',
+      'Enter': 'button-=',
+      'Backspace': 'button-c',
+      'b': 'button-bin',
+      's': 'button-sqrt',
+      'p': 'button-^2'
+    };
+  
+    return keyMap[key] || '';
+  }
+  
 
 $buttons.addEventListener('click', async (e) => {
     var nextAction = "";
@@ -16,7 +53,7 @@ $buttons.addEventListener('click', async (e) => {
         nextAction = e.target.name
     }
     
-
+    
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
@@ -125,5 +162,4 @@ function renderDisplay(chars) {
     currentDisplay = chars;
     $display.value = chars;
 }
-
 

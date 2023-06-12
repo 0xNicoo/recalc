@@ -40,8 +40,6 @@ test.describe('test', () => {
       }
     });
 
-  
-
     const historyEntry = await History.findOne({
       where: { OperationId: operation.id }
     })
@@ -73,8 +71,6 @@ test.describe('test', () => {
         name: "MUL"
       }
     });
-
-  
 
     const historyEntry = await History.findOne({
       where: { OperationId: operation.id }
@@ -180,7 +176,6 @@ test.describe('test', () => {
       expect(historyEntry.result).toEqual(25)
   });
 
-
   test('Deberia poder borrar el display',async({ page})=>{
     await page.goto('./');
   
@@ -246,14 +241,44 @@ test.describe('test', () => {
         name: "SQRT"
       }
     });
-
-    
   
     const historyEntry = await History.findOne({
       where: { OperationId: operation.id }
     })
   
       expect(historyEntry.firstArg).toEqual(36)
+      expect(historyEntry.result).toEqual(6)
+  });
+
+  test('Deberia poder realizar una suma por teclado',async({ page})=>{
+    await page.goto('./');
+  
+    await page.keyboard.press('Digit4');
+    await page.keyboard.press('NumpadAdd');
+    await page.keyboard.press('Digit2');
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/add/')),
+      page.keyboard.press('Enter')
+    ]);
+  
+    const { result } = await response.json();
+    expect(result).toBe(6);
+  
+    await expect(page.getByTestId('display')).toHaveValue(/6/)
+  
+    const operation = await Operation.findOne({
+      where: {
+        name: "ADD"
+      }
+    });
+  
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+  
+      expect(historyEntry.firstArg).toEqual(4)
+      expect(historyEntry.secondArg).toEqual(2)
       expect(historyEntry.result).toEqual(6)
   });
 
