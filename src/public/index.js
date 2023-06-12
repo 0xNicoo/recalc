@@ -19,36 +19,30 @@ document.addEventListener('keydown', async (e) => {
   });
   
   function getButtonIdForKey(key) {
-    switch (key) {
-      case '0':
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
-      case '8':
-      case '9':
-      case '.':
-      case '+':
-      case '-':
-      case '*':
-      case '/':
-        return `button-${key}`;
-      case 'Enter':
-        return 'button-=';
-      case 'Backspace':
-        return 'button-c';
-      case 'b':
-        return 'button-bin';
-      case 's':
-        return 'button-sqrt';
-      case 'p':
-        return 'button-^2';
-      default:
-        return '';
-    }
+    const keyMap = {
+      '0': 'button-0',
+      '1': 'button-1',
+      '2': 'button-2',
+      '3': 'button-3',
+      '4': 'button-4',
+      '5': 'button-5',
+      '6': 'button-6',
+      '7': 'button-7',
+      '8': 'button-8',
+      '9': 'button-9',
+      '.': 'button-.',
+      '+': 'button-+',
+      '-': 'button--',
+      '*': 'button-*',
+      '/': 'button-/',
+      'Enter': 'button-=',
+      'Backspace': 'button-c',
+      'b': 'button-bin',
+      's': 'button-sqrt',
+      'p': 'button-^2'
+    };
+  
+    return keyMap[key] || '';
   }
   
 
