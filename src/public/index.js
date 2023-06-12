@@ -10,7 +10,12 @@ let reset = false;
 
 
 $buttons.addEventListener('click', async (e) => {
-    const nextAction = e.target.name
+    var nextAction = "";
+
+    if (e.target.name !== "c" ){
+        nextAction = e.target.name
+    }
+    
 
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
@@ -42,6 +47,10 @@ $buttons.addEventListener('click', async (e) => {
 
         reset = true;
         return renderDisplay(result);
+    }
+
+    if (e.target.name === "c"){
+        renderDisplay("")
     }
 
     if (operations.includes(nextAction)) {
