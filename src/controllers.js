@@ -105,11 +105,12 @@ router.get("/bin/:a", async function (req, res) {
     const a = Number(params.a);
 
     if(isNaN(a)){
-        await createHistoryEntry({operationName: "SQRT", error: "El parámetro no es un número"})
+        await createHistoryEntry({operationName: "BIN", error: "El parámetro no es un número"})
         return res.status(400).json({error: 'El parámetro no es un número'});
     }
 
     const result = core.bin(a);
+    await createHistoryEntry({firstArg:a, secondArg:null, operationName:'BIN', result:result})
     return res.send({ result });
 });
 
