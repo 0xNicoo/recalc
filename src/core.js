@@ -11,15 +11,22 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    if ( b != 0 ){
+    if ( b !== 0 ){
         return a/b;
-    } else {
-        return "Error: Division por cero";
-    }
+    } 
+
+    throw new Error("Division por cero.")
 }
 
 function pow(a) {
     return Math.pow(a,2)
+}
+function sqrt(a){
+    return Math.sqrt(a)
+}
+
+function decimalToBinary(a) {
+    return a.toString(2);
 }
 
 export default {
@@ -27,5 +34,7 @@ export default {
     sub: subtract,
     mul: multiply,
     div: divide,
-    pow: pow
+    pow: pow,
+    sqrt: sqrt,
+    bin: decimalToBinary
 }

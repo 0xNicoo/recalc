@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.3] 11-06-2023
+
+### Added
+
+- Se realizaron las conexiones del front con la api.
+- Se le subio en nivel a las reglas del eslint.
+- Se agregaron test e2e
+
+### Fixed
+
+- Se resolvieron errores marcados por test estatico
+
 ## [1.3.2] 08-06-2023
 
 ### Fixed

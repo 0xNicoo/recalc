@@ -1,11 +1,11 @@
 {
   "name": "src",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "",
   "main": "src/cli.js",
   "scripts": {
     "test": "jest",
-    "test:e2e": "cross-env NODE_ENV=test playwright test ui.test",
+    "test:e2e": "cross-env NODE_ENV=test:e2e playwright test ui.test",
     "lint": "eslint src/**/*.js",
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
@@ -51,3 +51,4 @@
     ]
   }
 }
+
