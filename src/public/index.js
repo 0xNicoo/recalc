@@ -10,8 +10,14 @@ let reset = false;
 
 
 $buttons.addEventListener('click', async (e) => {
-    const nextAction = e.target.name
+    
+    var nextAction = '';
 
+    if(e.target.name !== undefined){
+        nextAction = e.target.name
+    }
+
+   
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
@@ -47,8 +53,10 @@ $buttons.addEventListener('click', async (e) => {
     if (reset) {
         reset = false;
         operation = null;
+        
         renderDisplay(nextAction);
     } else {
+
         renderDisplay(currentDisplay + nextAction);
     }
 })
@@ -92,8 +100,10 @@ async function calculateDiv(firstArg, secondArg) {
 }
 
 function renderDisplay(chars) {
+  
     currentDisplay = chars;
     $display.value = chars;
+    
 }
 
 
