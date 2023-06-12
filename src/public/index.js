@@ -1,7 +1,7 @@
 const $display = document.querySelector('.display')
 const $buttons = document.querySelector('.buttons')
 
-const operations = ['-','+','^2','*', '/','bin',"sqrt"];
+const operations = ['-','+','^2','*', '/','bin','sqrt'];
 
 let currentDisplay = "";
 let operation = null;
