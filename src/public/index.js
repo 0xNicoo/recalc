@@ -9,49 +9,48 @@ let reset = false;
 
 document.addEventListener('keydown', async (e) => {
     const key = e.key;
-    let buttonId = '';
-    switch (key) {
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-        case '.':
-        case '+':
-        case '-':
-        case '*':
-        case '/':
-        case '=':
-            buttonId = `button-${key}`;
-            break;
-        case 'Enter':
-            buttonId = 'button-=';
-            break;
-        case 'Backspace':
-            buttonId = 'button-c';
-            break;
-        case 'b':
-            buttonId = 'button-bin';
-            break;
-        case 's':
-            buttonId = 'button-sqrt';
-            break;
-        case 'p':
-            buttonId = 'button-^2';
-            break
-    }
+    const buttonId = getButtonIdForKey(key);
     if (buttonId) {
-        const button = document.getElementById(buttonId);
-        if (button) {
-          button.click();
-        }
+      const button = document.getElementById(buttonId);
+      if (button) {
+        button.click();
       }
-});
+    }
+  });
+  
+  function getButtonIdForKey(key) {
+    switch (key) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '.':
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        return `button-${key}`;
+      case 'Enter':
+        return 'button-=';
+      case 'Backspace':
+        return 'button-c';
+      case 'b':
+        return 'button-bin';
+      case 's':
+        return 'button-sqrt';
+      case 'p':
+        return 'button-^2';
+      default:
+        return '';
+    }
+  }
+  
 
 $buttons.addEventListener('click', async (e) => {
     var nextAction = "";
