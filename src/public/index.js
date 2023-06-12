@@ -25,11 +25,11 @@ $hisotries.addEventListener('click', async (e) => {
     let result;
 
     const nextAction = e.target.name
-    if(nextAction == "getAllHistory"){
+    if(nextAction === "getAllHistory"){
         result = await getAllHistory()
     }
 
-    if(nextAction == "clearScreen"){
+    if(nextAction === "clearScreen"){
         result = "";
     }
 
