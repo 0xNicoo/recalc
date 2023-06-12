@@ -1,7 +1,7 @@
 const $display = document.querySelector('.display')
 const $buttons = document.querySelector('.buttons')
 
-const operations = ['-','+','^2','*', '/'];
+const operations = ['-','+','^2','*', '/','bin','sqrt'];
 
 let currentDisplay = "";
 let operation = null;
@@ -29,7 +29,6 @@ document.addEventListener('keydown', async (e) => {
         case '*':
         case '/':
         case '=':
-        case '^2':
             buttonId = `button-${key}`;
             break;
         case 'Enter':
@@ -38,6 +37,18 @@ document.addEventListener('keydown', async (e) => {
         case 'Backspace':
             buttonId = 'button-c';
             break;
+        //Para usar la función decimal a binario se utiliza la letra b
+        case 'b':
+            buttonId = 'button-bin';
+            break;
+        //Para usar la función de raiz cuadrada se utiliza la letra s
+        case 's':
+            buttonId = 'button-sqrt';
+            break;
+        //Para usar la función potencia de dos se utiliza la letra p
+        case 'p':
+            buttonId = 'button-^2';
+            break
     }
 
     if (buttonId) {
@@ -49,8 +60,13 @@ document.addEventListener('keydown', async (e) => {
 });
 
 $buttons.addEventListener('click', async (e) => {
-    const nextAction = e.target.name
+    var nextAction = "";
 
+    if (e.target.name !== "c" ){
+        nextAction = e.target.name
+    }
+    
+    
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
@@ -75,8 +91,19 @@ $buttons.addEventListener('click', async (e) => {
             result = await calculateDiv(firstArg, secondArg)
         }
 
+        if (operation === "bin"){
+            result =  await calculateBin(firstArg)
+        }
+        if (operation === "sqrt"){
+            result = await calculateSqrt(firstArg)
+        }
+
         reset = true;
         return renderDisplay(result);
+    }
+
+    if (e.target.name === "c"){
+        renderDisplay("")
     }
 
     if (operations.includes(nextAction)) {
@@ -128,6 +155,20 @@ async function calculateDiv(firstArg, secondArg) {
         return result;
     }
     return error;
+}
+
+async function calculateBin(firstArg){
+    const resp = await fetch(`/api/v1/bin/${firstArg}`)
+    const {result} = await resp.json();
+    
+    return result;
+}
+
+async function calculateSqrt(firstArg){
+    const resp = await fetch (`/api/v1/sqrt/${firstArg}`)
+    const {result} = await resp.json();
+
+    return result;
 }
 
 function renderDisplay(chars) {
