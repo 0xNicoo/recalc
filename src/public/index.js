@@ -35,6 +35,8 @@ $hisotries.addEventListener('click', async (e) => {
 
     return renderHistoriesDisplay(result)
 })
+
+
 document.addEventListener('keydown', async (e) => {
     const key = e.key;
     const buttonId = getButtonIdForKey(key);
@@ -45,34 +47,6 @@ document.addEventListener('keydown', async (e) => {
       }
     }
   });
-  
-  function getButtonIdForKey(key) {
-    const keyMap = {
-      '0': 'button-0',
-      '1': 'button-1',
-      '2': 'button-2',
-      '3': 'button-3',
-      '4': 'button-4',
-      '5': 'button-5',
-      '6': 'button-6',
-      '7': 'button-7',
-      '8': 'button-8',
-      '9': 'button-9',
-      '.': 'button-.',
-      '+': 'button-+',
-      '-': 'button--',
-      '*': 'button-*',
-      '/': 'button-/',
-      'Enter': 'button-=',
-      'Backspace': 'button-c',
-      'b': 'button-bin',
-      's': 'button-sqrt',
-      'p': 'button-^2'
-    };
-  
-    return keyMap[key] || '';
-  }
-  
 
 $buttons.addEventListener('click', async (e) => {
     var nextAction = "";
@@ -191,6 +165,34 @@ async function calculateSqrt(firstArg){
 
     return result;
 }
+
+
+function getButtonIdForKey(key) {
+    const keyMap = {
+      '0': 'button-0',
+      '1': 'button-1',
+      '2': 'button-2',
+      '3': 'button-3',
+      '4': 'button-4',
+      '5': 'button-5',
+      '6': 'button-6',
+      '7': 'button-7',
+      '8': 'button-8',
+      '9': 'button-9',
+      '.': 'button-.',
+      '+': 'button-+',
+      '-': 'button--',
+      '*': 'button-*',
+      '/': 'button-/',
+      'Enter': 'button-=',
+      'Backspace': 'button-c',
+      'b': 'button-bin',
+      's': 'button-sqrt',
+      'p': 'button-^2'
+    };
+  
+    return keyMap[key] || '';
+  }
 
 function renderDisplay(chars) {
     currentDisplay = chars;
