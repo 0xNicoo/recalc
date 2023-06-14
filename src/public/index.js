@@ -106,7 +106,7 @@ $buttons.addEventListener('click', async (e) => {
         operation = null;
         renderDisplay(nextAction);
     } else {
-        if(nextAction != "=") {
+        if(nextAction !== "=") {
             let chars = currentDisplay + nextAction
             if( !isNaN(chars[0]))
                 renderDisplay(currentDisplay + nextAction);
