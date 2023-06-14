@@ -30,7 +30,7 @@ $hisotries.addEventListener('click', async (e) => {
     }
 
     if(nextAction === "deleteAllHistory"){
-        confirmResult = confirm("¿Seguro que quiere borrar el historial?")
+        const confirmResult = confirm("¿Seguro que quiere borrar el historial?")
         if(confirmResult){
             result = await deleteAllHistory()
             result = ""
