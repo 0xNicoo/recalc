@@ -87,8 +87,10 @@ $buttons.addEventListener('click', async (e) => {
             result = await calculateSqrt(firstArg)
         }
 
-        reset = true;
-        return renderDisplay(result);
+        if(result !== undefined){
+            reset = true;
+            return renderDisplay(result);
+        }
     }
 
     if (e.target.name === "c"){
@@ -104,7 +106,12 @@ $buttons.addEventListener('click', async (e) => {
         operation = null;
         renderDisplay(nextAction);
     } else {
-        renderDisplay(currentDisplay + nextAction);
+        if(nextAction !== "=") {
+            let chars = currentDisplay + nextAction
+            if( !isNaN(chars[0])){
+                renderDisplay(currentDisplay + nextAction);
+            }
+        }
     }
 })
 
