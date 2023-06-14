@@ -19,6 +19,9 @@ let currentDisplay = "";
 let operation = null;
 let reset = false;
 
+
+
+
 $hisotries.addEventListener('click', async (e) => {
     let result;
 
@@ -49,14 +52,10 @@ document.addEventListener('keydown', async (e) => {
 $buttons.addEventListener('click', async (e) => {
     var nextAction = "";
 
-    if (e.target.name !== "c" ){
+    if (e.target.name !== "c" && e.target.name !== undefined){
         nextAction = e.target.name
     }
 
-    if(e.target.name !== undefined){
-        nextAction = e.target.name
-    }
-    
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
