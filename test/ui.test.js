@@ -307,6 +307,15 @@ test.describe('test', () => {
       expect(historyEntry.result).toEqual(6)
   });
 
+  test('no deberia mostrar undefined en el display cuando se hace click en el "=" sin que halla una operacion',async({page})=>{
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).not.toHaveValue(/undefined/)
+  })
+
+
 })
 
 
