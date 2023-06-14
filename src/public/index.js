@@ -11,7 +11,7 @@ let reset = false;
 
 $buttons.addEventListener('click', async (e) => {
     
-    var nextAction = '';
+    var nextAction='';
 
     if(e.target.name !== undefined){
         nextAction = e.target.name
@@ -53,7 +53,7 @@ $buttons.addEventListener('click', async (e) => {
     if (reset) {
         reset = false;
         operation = null;
-        
+
         renderDisplay(nextAction);
     } else {
 
@@ -100,7 +100,6 @@ async function calculateDiv(firstArg, secondArg) {
 }
 
 function renderDisplay(chars) {
-  
     currentDisplay = chars;
     $display.value = chars;
     
