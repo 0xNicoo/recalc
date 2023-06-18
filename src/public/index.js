@@ -29,6 +29,16 @@ $hisotries.addEventListener('click', async (e) => {
         result = await getAllHistory()
     }
 
+    if(nextAction === "deleteAllHistory"){
+        const confirmResult = confirm("¿Seguro que quiere borrar el historial?")
+        if(confirmResult){
+            result = await deleteAllHistory()
+            result = ""
+        }else{
+            return;
+        }
+    }
+
     if(nextAction === "clearScreen"){
         result = "";
     }
@@ -157,6 +167,12 @@ async function getAllHistory(){
     const resp = await fetch(`/api/v1/histories`)
     const result = await resp.json();
     return result.allHistories;
+}
+
+async function deleteAllHistory(){
+    const resp = await fetch(`/api/v1/delete/all`)
+    const result = await resp.json();
+    return result;
 }
 
 async function calculateBin(firstArg){

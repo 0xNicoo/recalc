@@ -200,6 +200,32 @@ test.describe('test', () => {
     
   });
 
+  test('Deberia borrar el historial luego de realizar una operacion', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    page.on('dialog', dialog => dialog.accept())
+    await page.getByRole('button', { name: 'Borrar historial' }).click()
+    
+
+    await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/delete/all')),
+      page.getByRole('button', { name: 'Borrar historial' }).click()
+    ]);
+
+    const histories = await History.findAll({
+      where: {}
+    })
+
+    await expect(page.getByTestId('histories')).toHaveValue("")
+    expect(histories.length).toBe(0)
+    
+  });
+
 
   test('Deberia poder borrar el display',async({ page})=>{
     await page.goto('./');
