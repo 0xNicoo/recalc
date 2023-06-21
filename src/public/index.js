@@ -157,13 +157,15 @@ async function calculateAdd(firstArg, secondArg){
 }
 
 async function calculateDiv(firstArg, secondArg){
-    const error = "Error: División por cero";
-    if (secondArg !== "0") {
-        const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
+    const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
+    if(resp.status === 200){
         const { result } = await resp.json();
         return result;
     }
-    return error;
+    if(resp.status === 400){
+        const result  = await resp.json();
+        return "Error: " + result.error;
+    }
 }
 
 async function getAllHistory(){
