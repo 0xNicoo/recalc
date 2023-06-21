@@ -132,7 +132,7 @@ async function calculateSub(firstArg, secondArg) {
     return result;
 }
 
-async function calculateMult (firstArg,secondArg) {
+async function calculateMult(firstArg,secondArg) {
     const resp = await fetch(`/api/v1/multi/${firstArg}/${secondArg}`)
     const {result} = await resp.json();
 
@@ -140,6 +140,9 @@ async function calculateMult (firstArg,secondArg) {
 }
 
 async function calculatePow(firstArg){
+    if(firstArg > 100000){
+            return "Error: Numero mayor a 100000"
+    }
     const resp = await fetch(`/api/v1/pow/${firstArg}`)
     const {result} = await resp.json();
     
