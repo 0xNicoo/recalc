@@ -19,8 +19,13 @@ let currentDisplay = "";
 let operation = null;
 let reset = false;
 
+var $toggle = document.getElementById('container')
+var $body = document.querySelector('body')
 
-
+$toggle.onclick= function(){
+    $toggle.classList.toggle('active');
+    $body.classList.toggle('active');
+}
 
 $hisotries.addEventListener('click', async (e) => {
     let result;
@@ -242,3 +247,4 @@ function renderHistoriesDisplay(histories){
     });
    
 }
+
