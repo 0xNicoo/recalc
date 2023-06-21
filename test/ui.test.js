@@ -145,6 +145,24 @@ test.describe('test', () => {
     expect(historyEntry.secondArg).toEqual(4)
     expect(historyEntry.result).toEqual(2)
   });
+
+  test('Deberia dar error al dividir por cero', async ({ page }) => {
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '8' }).click()
+    await page.getByRole('button', { name: '/' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/div/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const result = await response.json();
+    expect(result.error).toBe("Division por cero.");
+  
+    await expect(page.getByTestId('display')).toHaveValue("Error: Division por cero.")
+  });
   
   test('Deberia poder realizar la operacion potencia',async({ page})=>{
     await page.goto('./');
