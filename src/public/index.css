@@ -9,6 +9,36 @@ body {
     background-color: var(--background-body)
 }
 
+#container{
+    background-color: #f8f8f8;
+    position: relative;
+    width: 80px;
+    height: 40px;
+    box-shadow: inset 4px 4px 6px #b4b4b4,
+                inset -4px -4px 6px #e9e9e9;
+    margin: 0px auto;
+    margin-bottom: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.toggle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    transform: scale(.7);
+    background-color: linear-gradient(145deg, #d8d8d8, #ffffff);
+    border-radius: 25px;
+    box-shadow: 3px 3px 8px #c4c4c4,
+                -3px -3px 8px #fff;
+}
+
+#container.active .toggle{
+    left: 40px;
+}
+
 .calc {
     margin: 1rem auto;
     padding: 1rem;
@@ -43,6 +73,13 @@ body {
     width: 100%;
     height: 100px;
     resize: none;
+}
+
+body.active {
+    --background-body: white;
+    --background-button: black;
+    --color-button: white;
+    --border-color-display: black;    
 }
 
 @media screen and (prefers-color-scheme: light) {
