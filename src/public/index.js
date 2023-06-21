@@ -155,11 +155,11 @@ async function calculateAdd(firstArg, secondArg){
 
 async function calculateDiv(firstArg, secondArg){
     const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
-    if(resp.status == 200){
+    if(resp.status === 200){
         const { result } = await resp.json();
         return result;
     }
-    if(resp.status == 400){
+    if(resp.status === 400){
         const result  = await resp.json();
         return "Error: " + result.error;
     }
