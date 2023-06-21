@@ -176,6 +176,24 @@ test.describe('test', () => {
       expect(historyEntry.result).toEqual(25)
   });
 
+  test('Deberia dar error al ingresar un numero mayor a 100000', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '^2' }).click()
+
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).toHaveValue("Error: Numero mayor a 100000")
+    
+  });
+
   test('Deberia traer la operacion 4+4=8 y 5-4=1 luego de haberlas realizada', async ({ page }) => {
     await page.goto('./');
 
