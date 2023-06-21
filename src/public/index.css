@@ -82,6 +82,7 @@ body.active {
     --border-color-display: black;    
 }
 
+/*
 @media screen and (prefers-color-scheme: light) {
     html {
         --background-body: white;
@@ -90,3 +91,4 @@ body.active {
         --border-color-display: black;
     }
 }
+*/
