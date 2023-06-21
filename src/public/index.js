@@ -21,6 +21,7 @@ let reset = false;
 
 
 
+
 $hisotries.addEventListener('click', async (e) => {
     let result;
 
@@ -61,11 +62,10 @@ document.addEventListener('keydown', async (e) => {
 $buttons.addEventListener('click', async (e) => {
     var nextAction = "";
 
-    if (e.target.name !== "c" ){
+    if (e.target.name !== "c" && e.target.name !== undefined){
         nextAction = e.target.name
     }
-    
-    
+
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
@@ -114,14 +114,17 @@ $buttons.addEventListener('click', async (e) => {
     if (reset) {
         reset = false;
         operation = null;
+
         renderDisplay(nextAction);
     } else {
+
         if(nextAction !== "=") {
             let chars = currentDisplay + nextAction
             if( !isNaN(chars[0])){
                 renderDisplay(currentDisplay + nextAction);
             }
         }
+
     }
 })
 
@@ -225,6 +228,7 @@ function getButtonIdForKey(key) {
 function renderDisplay(chars) {
     currentDisplay = chars;
     $display.value = chars;
+    
 }
 
 
