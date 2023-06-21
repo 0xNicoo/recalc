@@ -145,6 +145,24 @@ test.describe('test', () => {
     expect(historyEntry.secondArg).toEqual(4)
     expect(historyEntry.result).toEqual(2)
   });
+
+  test('Deberia dar error al dividir por cero', async ({ page }) => {
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '8' }).click()
+    await page.getByRole('button', { name: '/' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/div/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const result = await response.json();
+    expect(result.error).toBe("Division por cero.");
+  
+    await expect(page.getByTestId('display')).toHaveValue("Error: Division por cero.")
+  });
   
   test('Deberia poder realizar la operacion potencia',async({ page})=>{
     await page.goto('./');
@@ -176,6 +194,24 @@ test.describe('test', () => {
       expect(historyEntry.result).toEqual(25)
   });
 
+  test('Deberia dar error al ingresar un numero mayor a 100000', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '^2' }).click()
+
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).toHaveValue("Error: Numero mayor a 100000")
+    
+  });
+
   test('Deberia traer la operacion 4+4=8 y 5-4=1 luego de haberlas realizada', async ({ page }) => {
     await page.goto('./');
 
@@ -197,6 +233,32 @@ test.describe('test', () => {
     ]);
 
     await expect(page.getByTestId('histories')).toHaveValue("4 + 4 = 8\n5 - 4 = 1\n")
+    
+  });
+
+  test('Deberia borrar el historial luego de realizar una operacion', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    page.on('dialog', dialog => dialog.accept())
+    await page.getByRole('button', { name: 'Borrar historial' }).click()
+    
+
+    await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/delete/all')),
+      page.getByRole('button', { name: 'Borrar historial' }).click()
+    ]);
+
+    const histories = await History.findAll({
+      where: {}
+    })
+
+    await expect(page.getByTestId('histories')).toHaveValue("")
+    expect(histories.length).toBe(0)
     
   });
 
@@ -306,6 +368,15 @@ test.describe('test', () => {
       expect(historyEntry.secondArg).toEqual(2)
       expect(historyEntry.result).toEqual(6)
   });
+
+  test('no deberia mostrar undefined en el display cuando se hace click en el "=" sin que halla una operacion',async({page})=>{
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).not.toHaveValue(/undefined/)
+  })
+
 
 })
 

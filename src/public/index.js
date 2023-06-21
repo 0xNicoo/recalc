@@ -30,6 +30,16 @@ $hisotries.addEventListener('click', async (e) => {
         result = await getAllHistory()
     }
 
+    if(nextAction === "deleteAllHistory"){
+        const confirmResult = confirm("¿Seguro que quiere borrar el historial?")
+        if(confirmResult){
+            result = await deleteAllHistory()
+            result = ""
+        }else{
+            return;
+        }
+    }
+
     if(nextAction === "clearScreen"){
         result = "";
     }
@@ -87,8 +97,10 @@ $buttons.addEventListener('click', async (e) => {
             result = await calculateSqrt(firstArg)
         }
 
-        reset = true;
-        return renderDisplay(result);
+        if(result !== undefined){
+            reset = true;
+            return renderDisplay(result);
+        }
     }
 
     if (e.target.name === "c"){
@@ -106,7 +118,13 @@ $buttons.addEventListener('click', async (e) => {
         renderDisplay(nextAction);
     } else {
 
-        renderDisplay(currentDisplay + nextAction);
+        if(nextAction !== "=") {
+            let chars = currentDisplay + nextAction
+            if( !isNaN(chars[0])){
+                renderDisplay(currentDisplay + nextAction);
+            }
+        }
+
     }
 })
 
@@ -117,7 +135,7 @@ async function calculateSub(firstArg, secondArg) {
     return result;
 }
 
-async function calculateMult (firstArg,secondArg) {
+async function calculateMult(firstArg,secondArg) {
     const resp = await fetch(`/api/v1/multi/${firstArg}/${secondArg}`)
     const {result} = await resp.json();
 
@@ -125,6 +143,9 @@ async function calculateMult (firstArg,secondArg) {
 }
 
 async function calculatePow(firstArg){
+    if(firstArg > 100000){
+            return "Error: Numero mayor a 100000"
+    }
     const resp = await fetch(`/api/v1/pow/${firstArg}`)
     const {result} = await resp.json();
     
@@ -139,19 +160,27 @@ async function calculateAdd(firstArg, secondArg){
 }
 
 async function calculateDiv(firstArg, secondArg){
-    const error = "Error: División por cero";
-    if (secondArg !== "0") {
-        const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
+    const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`);
+    if(resp.status === 200){
         const { result } = await resp.json();
         return result;
     }
-    return error;
+    if(resp.status === 400){
+        const result  = await resp.json();
+        return "Error: " + result.error;
+    }
 }
 
 async function getAllHistory(){
     const resp = await fetch(`/api/v1/histories`)
     const result = await resp.json();
     return result.allHistories;
+}
+
+async function deleteAllHistory(){
+    const resp = await fetch(`/api/v1/delete/all`)
+    const result = await resp.json();
+    return result;
 }
 
 async function calculateBin(firstArg){
