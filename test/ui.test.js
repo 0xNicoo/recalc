@@ -40,8 +40,6 @@ test.describe('test', () => {
       }
     });
 
-  
-
     const historyEntry = await History.findOne({
       where: { OperationId: operation.id }
     })
@@ -73,8 +71,6 @@ test.describe('test', () => {
         name: "MUL"
       }
     });
-
-  
 
     const historyEntry = await History.findOne({
       where: { OperationId: operation.id }
@@ -149,6 +145,24 @@ test.describe('test', () => {
     expect(historyEntry.secondArg).toEqual(4)
     expect(historyEntry.result).toEqual(2)
   });
+
+  test('Deberia dar error al dividir por cero', async ({ page }) => {
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '8' }).click()
+    await page.getByRole('button', { name: '/' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/div/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const result = await response.json();
+    expect(result.error).toBe("Division por cero.");
+  
+    await expect(page.getByTestId('display')).toHaveValue("Error: Division por cero.")
+  });
   
   test('Deberia poder realizar la operacion potencia',async({ page})=>{
     await page.goto('./');
@@ -179,6 +193,190 @@ test.describe('test', () => {
       expect(historyEntry.firstArg).toEqual(5)
       expect(historyEntry.result).toEqual(25)
   });
+
+  test('Deberia dar error al ingresar un numero mayor a 100000', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '^2' }).click()
+
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).toHaveValue("Error: Numero mayor a 100000")
+    
+  });
+
+  test('Deberia traer la operacion 4+4=8 y 5-4=1 luego de haberlas realizada', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    await page.getByRole('button', { name: '5' }).click()
+    await page.getByRole('button', { name: '-' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    await page.getByRole('button', { name: 'Ver historial' }).click()
+
+    await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/histories')),
+      page.getByRole('button', { name: 'Ver historial' }).click()
+    ]);
+
+    await expect(page.getByTestId('histories')).toHaveValue("4 + 4 = 8\n5 - 4 = 1\n")
+    
+  });
+
+  test('Deberia borrar el historial luego de realizar una operacion', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    page.on('dialog', dialog => dialog.accept())
+    await page.getByRole('button', { name: 'Borrar historial' }).click()
+    
+
+    await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/delete/all')),
+      page.getByRole('button', { name: 'Borrar historial' }).click()
+    ]);
+
+    const histories = await History.findAll({
+      where: {}
+    })
+
+    await expect(page.getByTestId('histories')).toHaveValue("")
+    expect(histories.length).toBe(0)
+    
+  });
+
+
+  test('Deberia poder borrar el display',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '7' }).click()
+    await page.getByRole('button', { name: '6' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+  
+    await page.getByRole('button', { name: 'c' }).click()
+    
+    await expect(page.getByTestId('display')).toHaveValue("")
+  
+  });
+
+  test('Deberia poder realizar la conversión de decimal a binario',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: 'bin' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/bin/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const { result } = await response.json();
+    expect(result).toBe("100");
+  
+    await expect(page.getByTestId('display')).toHaveValue(/100/)
+  
+    const operation = await Operation.findOne({
+      where: {
+        name: "BIN"
+      }
+    });
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+  
+      expect(historyEntry.firstArg).toEqual(4)
+      expect(historyEntry.result).toEqual(100)
+  });
+
+  test('Deberia poder realizar la raiz cuadrada',async({ page})=>{
+    await page.goto('./');
+  
+    await page.getByRole('button', { name: '3' }).click()
+    await page.getByRole('button', { name: '6' }).click()
+    await page.getByRole('button', { name: 'sqrt' }).click()
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/sqrt/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+  
+    const { result } = await response.json();
+    expect(result).toBe(6);
+  
+    await expect(page.getByTestId('display')).toHaveValue(/6/)
+  
+    const operation = await Operation.findOne({
+      where: {
+        name: "SQRT"
+      }
+    });
+  
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+  
+      expect(historyEntry.firstArg).toEqual(36)
+      expect(historyEntry.result).toEqual(6)
+  });
+
+  test('Deberia poder realizar una suma por teclado',async({ page})=>{
+    await page.goto('./');
+  
+    await page.keyboard.press('Digit4');
+    await page.keyboard.press('NumpadAdd');
+    await page.keyboard.press('Digit2');
+  
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/add/')),
+      page.keyboard.press('Enter')
+    ]);
+  
+    const { result } = await response.json();
+    expect(result).toBe(6);
+  
+    await expect(page.getByTestId('display')).toHaveValue(/6/)
+  
+    const operation = await Operation.findOne({
+      where: {
+        name: "ADD"
+      }
+    });
+  
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+  
+      expect(historyEntry.firstArg).toEqual(4)
+      expect(historyEntry.secondArg).toEqual(2)
+      expect(historyEntry.result).toEqual(6)
+  });
+
+  test('no deberia mostrar undefined en el display cuando se hace click en el "=" sin que halla una operacion',async({page})=>{
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).not.toHaveValue(/undefined/)
+  })
+
 
 })
 
